@@ -22,26 +22,86 @@ public class Member extends HttpServlet{
 		
 	}
 	int id;
-	String pw;
+	String pwd;
 	String name;
+	String tel;
+	String email;
+	String dept;
+	String gender;
+	String birth;
+	
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getPw() {
-		return pw;
+
+	public String getPwd() {
+		return pwd;
 	}
-	public void setPw(String pw) {
-		this.pw = pw;
+
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getDept() {
+		return dept;
+	}
+
+	public void setDept(String dept) {
+		this.dept = dept;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getBirth() {
+		return birth;
+	}
+
+	public void setBirth(String birth) {
+		this.birth = birth;
+	}
+
+	public Connection getCon() {
+		return con;
+	}
+
+	public void setCon(Connection con) {
+		this.con = con;
+	}
+	
 	
 	Connection con = null;
 	public static void main(String[] args) {
@@ -61,7 +121,12 @@ public class Member extends HttpServlet{
 	            String sql = sb.append("create table if not exists member(")
 	                    .append("id int,")
 	                    .append("name varchar(45),")
-	                    .append("pw varchar(45),")
+	                    .append("pwd varchar(45),")
+	                    .append("tel varchar(45),")
+	                    .append("email varchar(45),")
+	                    .append("dept varchar(45),")
+	                    .append("gender varchar(45),")
+	                    .append("birth varchar(45),")
 	                    .append(");").toString();
 	  
 				st.execute(sql);
@@ -107,11 +172,21 @@ public class Member extends HttpServlet{
 
 				String name = rs.getString("name");
 
-				String pw = rs.getString("pw");
+				String pwd = rs.getString("pwd");
+				
+				String tel = rs.getString("tel");
 
-				System.out.printf("id:  %d, Name: %s, pw: %s"
+				String email = rs.getString("email");
+				
+				String dept = rs.getString("dept");
 
-						+ "\n", id, name, pw);
+				String gender = rs.getString("gender");
+				
+				String birth = rs.getString("birth");
+
+				System.out.printf("id:  %d, name: %s, pwd: %s, tel: %s, email: %s, dept: %s, gender: %s, birth: %s"
+
+						+ "\n", id, name, pwd, tel, email, dept, gender, birth);
 
 			}
 			rs.close();
@@ -129,7 +204,7 @@ public class Member extends HttpServlet{
 	}	
 	
 	public void insert(Member m) {
-        String sql = "insert into member values(?,?,?);";
+        String sql = "insert into member values(?,?,?,?,?,?,?,?);";
         PreparedStatement pst = null;
         try {
             pst = con.prepareStatement(sql);
@@ -137,7 +212,17 @@ public class Member extends HttpServlet{
 
 			pst.setString(2, m.getName());
 			
-			pst.setString(3, m.getPw());
+			pst.setString(3, m.getPwd());
+			
+			pst.setString(4, m.getTel()); 
+
+			pst.setString(5, m.getEmail());
+				
+			pst.setString(6, m.getDept());
+			
+			pst.setString(7, m.getGender());
+			
+			pst.setString(8, m.getBirth());
 
             pst.executeUpdate();
         } catch (SQLException e) {
